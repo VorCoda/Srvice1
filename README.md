@@ -16,23 +16,23 @@ RUN apk update && \
 RUN addgroup -g 2025 servicegroup && \
 ```
 >Новый пользователь serviceuser, таким же id , добавляем в нашу группу, добавляем shell, не создаем домашнюю папку и не запрашиваем пароль для юзера 
-    ```
+```
     adduser -u 2025 -G servicegroup -s /bin/sh -D serviceuser && \
-    ```
+```
 >меняем владельца  файлов  на нашего пользователя
 ``` 
     chown -R serviceuser:servicegroup /etc/nginx && \
     chown -R serviceuser:servicegroup /var/log/nginx && \
     chown -R serviceuser:servicegroup /var/lib/nginx && \
-    ```
+```
 >Т.к запуск не от root пользователя - создаем пустой файл, куда nginx запишет свой pid во время сборки
-    ```
+```
     touch /run/nginx/nginx.pid && \
-    ```
+```
 >Даем права на папку нашему пользователю
-    ```
+```
     chown -R serviceuser:servicegroup /run/nginx/nginx.pid
-    ```
+```
 
 
 >Переключаем пользователя , от имени которого теперь будут выполняться команды в контейнере
@@ -67,3 +67,10 @@ VOLUME /var/www/html/
 ```
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 ```
+
+
+
+
+## Описание Compose.yml
+
+
