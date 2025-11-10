@@ -12,37 +12,58 @@ RUN apk update && \
 
 >Создаем непривилегированного пользователя и меняем собственника файлов
 Новая группа servicegroup с фиксированным id  = 2025
-```RUN addgroup -g 2025 servicegroup && \```
+```
+RUN addgroup -g 2025 servicegroup && \
+```
 >Новый пользователь serviceuser, таким же id , добавляем в нашу группу, добавляем shell, не создаем домашнюю папку и не запрашиваем пароль для юзера 
-    ```adduser -u 2025 -G servicegroup -s /bin/sh -D serviceuser && \```
+    ```
+    adduser -u 2025 -G servicegroup -s /bin/sh -D serviceuser && \
+    ```
 >меняем владельца  файлов  на нашего пользователя
 ``` 
     chown -R serviceuser:servicegroup /etc/nginx && \
     chown -R serviceuser:servicegroup /var/log/nginx && \
-    chown -R serviceuser:servicegroup /var/lib/nginx && \```
+    chown -R serviceuser:servicegroup /var/lib/nginx && \
+    ```
 >Т.к запуск не от root пользователя - создаем пустой файл, куда nginx запишет свой pid во время сборки
-    ```touch /run/nginx/nginx.pid && \```
+    ```
+    touch /run/nginx/nginx.pid && \
+    ```
 >Даем права на папку нашему пользователю
-    ```chown -R serviceuser:servicegroup /run/nginx/nginx.pid```
+    ```
+    chown -R serviceuser:servicegroup /run/nginx/nginx.pid
+    ```
 
 
 >Переключаем пользователя , от имени которого теперь будут выполняться команды в контейнере
-```USER serviceuser```  
+```
+USER serviceuser
+```  
 
 >  Обозначаем рабочую директорию для  контейнеров на этом образе
-```WORKDIR /etc/nginx/```
+```
+WORKDIR /etc/nginx/
+```
 
 
 >По заданию просили добавить возможность конфигурирования nginx через внешний файл , поэтому мы копируем при создании образа наш внешний файл nginx.conf  с хоста (файл будет  лежать в workdir контейнера с именем nginx.conf)
-```COPY ./nginx/nginx.conf nginx.conf```
+```
+COPY ./nginx/nginx.conf nginx.conf
+```
 
 >Установим по дефолту для контейнеров на этом образе порт 80 (локальный закрытый) , при запуске в докере будет порт 8080(внешний), дефолтный порт определен в  nginx.conf , поэтому нужно будет заново пересобрать образ , поменяв expose в докерфайле, если он поменяется в nginx.conf
-```EXPOSE 80```
+```
+EXPOSE 80
+```
 
 >Обозначим внешний рабочий том для контейнеров 
 При запуске контейнера смонтируем папку на хосте (в ней будет страница сайта  html-файл) с указанной папкой  для контейнера
-```VOLUME /var/www/html/```
+```
+VOLUME /var/www/html/
+```
 
 >Пропишем, команду, которая сразу запустит nginx  в foreground-режиме , чтобы
 контейнер не “умер” после запуска nginx
-```ENTRYPOINT ["nginx", "-g", "daemon off;"]```
+```
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+```
