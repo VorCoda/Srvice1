@@ -8,15 +8,15 @@
 2. Копируем репоз. 
 ```git clone https://github.com/geetarista/go-http-hello-world.git ./src```
 
-  **Собираем образы в ручную в нужном порядке**<br>
-3. ```docker build -f system -t lab04-system:latest . ```<br>
-4. ```docker build --build-arg NAME=hello --build-arg SRC=src -f build -t lab04-build:latest . ```<br>
-5. ```docker build --build-arg NAME=hello -f Dockerfile -t lab04-app:latest . ```<br>
+3. Собираем образы в ручную в нужном порядке
+4. ```docker build -f system -t lab04-system:latest . ```
+5. ```docker build --build-arg NAME=hello --build-arg SRC=src -f build -t lab04-build:latest . ```
+6. ```docker build --build-arg NAME=hello -f Dockerfile -t lab04-app:latest . ```
 
-6. Запускаем контейнер с образом lab04-app:
+7. Запускаем контейнер с образом lab04-app:
  ```docker run --name lab04-hello --env APP_NAME=hello -d -p 8082:80 lab04-app```
 
-7. Используем [http://localhost:**8082**](http://localhost:**8082**) для проверки работоспособности
+8. Используем [http://localhost:**8082**](http://localhost:**8082**) для проверки работоспособности
 
 **Цель лабораторной: освоить методы создания образов с разными уровнями зависимостей**
 
