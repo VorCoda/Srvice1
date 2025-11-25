@@ -9,9 +9,9 @@
 ```git clone https://github.com/geetarista/go-http-hello-world.git ./src```
 
   **Собираем образы в ручную в нужном порядке**<br>
-3. ```docker build -f system -t lab04-system:latest . ```
-4. ```docker build --build-arg NAME=hello --build-arg SRC=src -f build -t lab04-build:latest . ```
-5. ```docker build --build-arg NAME=hello -f Dockerfile -t lab04-app:latest . ```
+3. ```docker build -f system -t lab04-system:latest . ```<br>
+4. ```docker build --build-arg NAME=hello --build-arg SRC=src -f build -t lab04-build:latest . ```<br>
+5. ```docker build --build-arg NAME=hello -f Dockerfile -t lab04-app:latest . ```<br>
 
 6. Запускаем контейнер с образом lab04-app:
  ```docker run --name lab04-hello --env APP_NAME=hello -d -p 8082:80 lab04-app```
