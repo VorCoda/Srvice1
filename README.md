@@ -8,7 +8,7 @@
 2. Копируем репоз. 
 ```git clone https://github.com/geetarista/go-http-hello-world.git ./src```
 
-**Собираем образы в ручную в нужном порядке**
+  **Собираем образы в ручную в нужном порядке**<br>
 3. ```docker build -f system -t lab04-system:latest . ```
 4. ```docker build --build-arg NAME=hello --build-arg SRC=src -f build -t lab04-build:latest . ```
 5. ```docker build --build-arg NAME=hello -f Dockerfile -t lab04-app:latest . ```
